@@ -16,7 +16,6 @@ export default function Painel(){
         onChangeTask()
     }, [priorityFilter, statusFilter])
 
-
     function onChangeTask(){
         const newTasks = findAllTasks()
         if(newTasks){
@@ -83,6 +82,7 @@ const PainelContent = styled.div`
     justify-content: center;
     padding: 12px;
 `
+
 const ContainerTask = styled.div`
     width: 100%;
     max-width: 548px;

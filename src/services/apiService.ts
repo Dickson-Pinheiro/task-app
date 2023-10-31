@@ -37,6 +37,33 @@ export function apiService(){
             }
         },
 
+        removeTask(id: string){
+            const tasksInString = localStorage.getItem('tasks');
+            if(tasksInString){
+                const tasks: ITask[] = JSON.parse(tasksInString);
+                if(tasks){
+                    const task = tasks.find(t=> t.id === id)
+                    if(task?.done){
+                        return
+                    }
+                    const filteredTasks: ITask[] = tasks.filter(t => t.id !== id);
+                    localStorage.setItem('tasks', JSON.stringify(filteredTasks));
+                }
+            }
+        },
+
+        updateTask(id: string, text: string): string | undefined{
+            const tasksInString = localStorage.getItem('tasks');
+            if(tasksInString){
+                const tasks: ITask[] = JSON.parse(tasksInString);
+                const task = tasks.find(t => t.id === id);
+                if(task && text){
+                    task.task = text
+                }
+                localStorage.setItem('tasks', JSON.stringify(tasks));
+                return task?.task
+            }
+        },
     }
 
     return api;
