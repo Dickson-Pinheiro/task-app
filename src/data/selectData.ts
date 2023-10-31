@@ -23,3 +23,25 @@ export const prioritiesOptions: PriorityOption[] = [
         label: 'Baixa'
     }
 ];
+
+export type Status = "concluído" | "andamento" | "todos"
+
+export interface StatusOption {
+    value: Status,
+    label: string
+}
+
+export const statusOptions: StatusOption[] = [
+    {
+        value: 'andamento',
+        label: 'Em andamento'
+    },
+    {
+        value: 'concluído',
+        label: 'Concluído',
+    },
+    {
+        value: 'todos',
+        label: 'Todos'
+    }
+]
