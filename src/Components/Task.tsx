@@ -1,16 +1,24 @@
 import styled from "styled-components"
 import { Priority } from '../data/selectData';
 import { PiXLight, PiCircleLight, PiCheckCircleFill, PiCheckLight } from 'react-icons/pi'
+import { apiService } from "../services/apiService"; 
 
 interface TaskProps {
     text: string
-    priority: Priority,
-    done: boolean,
-    id: string,
+    priority: Priority
+    done: boolean
+    id: string
+    onChangeTask: Function
 }
 
 
-export default function Task({ text, priority, done, id }: TaskProps) {
+export default function Task({ text, priority, done, id, onChangeTask }: TaskProps) {
+    const { toggleDoneTask } = apiService()
+
+    function doneTaskToggle() {
+        toggleDoneTask(id)
+        onChangeTask()
+    }
 
     return (
         <ContainerTask done={done}>
@@ -23,7 +31,7 @@ export default function Task({ text, priority, done, id }: TaskProps) {
             }
             <Content>
                 <DoneControl>
-                    {done ? <PiCheckCircleFill color='#00ff00' /> : <PiCircleLight />}
+                    {done ? <PiCheckCircleFill color='#00ff00' onClick={doneTaskToggle}/> : <PiCircleLight onClick={doneTaskToggle}/>}
                 </DoneControl>
                 <ContainerDetails>
                     <p>{text}</p>

@@ -12,9 +12,11 @@ export interface ITask {
     done: boolean
 }
 
+interface FormTaskProps {
+    onChangeTask: Function
+}
 
-
-export default function FormTask(){
+export default function FormTask( { onChangeTask }: FormTaskProps ){
     const [text, setText] = useState<string>('');
     const [defaultPriority, setDefaultPriority] = useState<PriorityOption>(prioritiesOptions[1])
     const { createTask } = apiService()
@@ -44,6 +46,7 @@ export default function FormTask(){
             done: false
         } 
         createTask(task)
+        onChangeTask()
         setText('')
     }
 

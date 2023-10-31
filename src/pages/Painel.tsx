@@ -6,21 +6,26 @@ import { apiService } from "../services/apiService"
 import Task from "../Components/Task"
 
 export default function Painel(){
-    const [tasks, setTasks] = useState<ITask[]>()
-    const { findAllTasks } = apiService()
+    const { findAllTasks } = apiService();
+    const [tasks, setTasks] = useState<ITask[]>([])
 
     useEffect(() => {
-        const newTasks: ITask[] = findAllTasks();
-        setTasks(newTasks)
+        onChangeTask()
     }, [])
+
+
+    function onChangeTask(){
+        const newTasks = findAllTasks()
+        setTasks(newTasks)
+    }
 
     return(
         <ContainerPainel>
             <Header />
-            <FormTask/>
+            <FormTask onChangeTask={onChangeTask}/>
             <PainelContent>
                 <ContainerTask>
-                    {tasks?.map(task => <Task priority={task.priority} text={task.task} done={task.done} id={task.id} key={task.id}></Task>)}
+                    {tasks?.map(task => <Task priority={task.priority} text={task.task} done={task.done} id={task.id} key={task.id} onChangeTask={onChangeTask}></Task>)}
                 </ContainerTask>
             </PainelContent>
         </ContainerPainel>

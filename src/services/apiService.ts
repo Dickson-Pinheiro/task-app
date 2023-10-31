@@ -25,6 +25,18 @@ export function apiService(){
             return []
         },
 
+        toggleDoneTask(id: string){
+            const tasksInString = localStorage.getItem('tasks');
+            if(tasksInString){
+                const tasks: ITask[] = JSON.parse(tasksInString);
+                const task = tasks.find(t => t.id === id);
+                if(task){
+                    task.done = !task.done
+                }
+                localStorage.setItem('tasks', JSON.stringify(tasks));
+            }
+        },
+
     }
 
     return api;
