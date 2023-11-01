@@ -6,12 +6,13 @@ import {PiNotePencilThin} from 'react-icons/pi'
 interface TaskDescriptionProps {
     text: string
     id: string
+    editable: boolean
     onChangeTask: Function
+    onEditDisable: () => void
 }
 
 
-export default function TaskDescription({ text, id, onChangeTask }: TaskDescriptionProps) {
-    const [editable, setEditable] = useState<boolean>(false);
+export default function TaskDescription({ text, id, onChangeTask, editable, onEditDisable }: TaskDescriptionProps) {;
     const [editValue, setEditValue] = useState<string>(text);
     const { updateTask } = apiService()
 
@@ -20,14 +21,14 @@ export default function TaskDescription({ text, id, onChangeTask }: TaskDescript
         const newText = updateTask(id, editValue);
         setEditValue(newText as string)
         onChangeTask()
-        setEditable(false)
+        onEditDisable()
     }
 
     function editTaskValueBlur(){
         const newText = updateTask(id, editValue);
         setEditValue(newText as string)
         onChangeTask()
-        setEditable(false)
+        onEditDisable()
     }
 
     return (
@@ -39,7 +40,6 @@ export default function TaskDescription({ text, id, onChangeTask }: TaskDescript
                 </EditForm>
             )
             }
-            {!editable && <PiNotePencilThin onClick={() => setEditable(true)}/>}
         </ContainerTaskDescription>
     )
 }
@@ -59,6 +59,7 @@ const ContainerTaskDescription = styled.div`
 const ContainerText = styled.p`
     max-width: 280px;
     width: 100%;
+    word-wrap: break-word;
 `
 const EditForm = styled.form`
     width: 100%;

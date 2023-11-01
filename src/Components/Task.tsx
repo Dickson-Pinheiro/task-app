@@ -1,8 +1,9 @@
 import styled from "styled-components"
 import { Priority } from '../data/selectData';
-import { PiXLight, PiCircleLight, PiCheckCircleFill, PiCheckLight } from 'react-icons/pi'
+import { PiXLight, PiCircleLight, PiCheckCircleFill, PiCheckLight, PiNotePencilThin } from 'react-icons/pi'
 import { apiService } from "../services/apiService"; 
 import TaskDescription from "./TaskDescription";
+import { useState } from "react";
 
 interface TaskProps {
     text: string
@@ -15,6 +16,7 @@ interface TaskProps {
 
 export default function Task({ text, priority, done, id, onChangeTask }: TaskProps) {
     const { toggleDoneTask, removeTask: remove } = apiService()
+    const [editable, setEditable] = useState<boolean>(false) 
 
     function doneTaskToggle() {
         toggleDoneTask(id)
@@ -26,11 +28,16 @@ export default function Task({ text, priority, done, id, onChangeTask }: TaskPro
         onChangeTask()
     }
 
+    function onEditDisable(){
+        setEditable(false)
+    }
+
     return (
         <ContainerTask done={done}>
             {   
                 !done && (
                 <DeleteTask >
+                    {!editable && <PiNotePencilThin onClick={() => setEditable(true)} />}
                     <PiXLight onClick={removeTask}/>
                 </DeleteTask>
                 )
@@ -40,7 +47,7 @@ export default function Task({ text, priority, done, id, onChangeTask }: TaskPro
                     {done ? <PiCheckCircleFill color='#00ff00' onClick={doneTaskToggle}/> : <PiCircleLight onClick={doneTaskToggle}/>}
                 </DoneControl>
                 <ContainerDetails>
-                    <TaskDescription text={text} id={id} onChangeTask={onChangeTask}/>
+                    <TaskDescription text={text} id={id} onChangeTask={onChangeTask} editable={editable} onEditDisable={onEditDisable}/>
                     <ContainerPriority priority={priority}>{priority}</ContainerPriority>
                 </ContainerDetails>
             </Content>
@@ -78,6 +85,8 @@ const DoneControl = styled.div`
 `
 
 const DoneAlert = styled.span`
+    display: flex;
+    gap: 4px;
     position: absolute;
     bottom: 8px;
     right: 8px;
@@ -111,7 +120,7 @@ const DeleteTask = styled.span`
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 3px;
+    gap: 8px;
     top: 8px;
     right: 8px;
     cursor: pointer;
