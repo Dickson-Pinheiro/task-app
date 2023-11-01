@@ -36,10 +36,10 @@ export default function Task({ text, priority, done, id, onChangeTask }: TaskPro
         <ContainerTask done={done}>
             {   
                 !done && (
-                <DeleteTask >
+                <EditAndDeleteControl >
                     {!editable && <PiNotePencilThin onClick={() => setEditable(true)} />}
                     <PiXLight onClick={removeTask}/>
-                </DeleteTask>
+                </EditAndDeleteControl>
                 )
             }
             <Content>
@@ -115,7 +115,7 @@ const ContainerPriority = styled.p<ContainerPriorityProps>`
     color: ${props => props.theme.white};
 `
 
-const DeleteTask = styled.span`
+const EditAndDeleteControl = styled.span`
     position: absolute;
     display: flex;
     align-items: center;
