@@ -5,27 +5,27 @@ import { useEffect, useState } from "react"
 import { taskService } from "../services/taskService"
 import Task from "../Components/Task"
 import { Priority, PriorityOption, Status } from "../data/selectData"
+import { useListTasks } from "../hooks/useListTasks"
 
 export default function Painel(){
-    const { findAllTasks } = taskService();
-    const [tasks, setTasks] = useState<ITask[]>([]);
     const [priorityFilter, setPriorityFilter] = useState<Priority[]>(['alta', 'baixa', 'media', 'urgente'])
     const [statusFilter, setStatusFilter] = useState<Status>('todos');
+    const { data, refetch } = useListTasks()
 
     useEffect(() => {
-        onChangeTask()
+        refetch()
     }, [priorityFilter, statusFilter])
 
     function onChangeTask(){
-        const newTasks = findAllTasks()
-        if(newTasks){
-            const sortedTasks = newTasks.sort((a: ITask, b: ITask) => a.priorityValue - b.priorityValue)
+        if(data?.data){
+            const sortedTasks = data.data.sort((a: ITask, b: ITask) => a.priorityValue - b.priorityValue)
             let filteredTasks = getTaskByStatus(statusFilter, sortedTasks)
             if(filteredTasks){
                 filteredTasks = getTaskByPriority(priorityFilter, filteredTasks);
             }
-            setTasks(filteredTasks)
+            return filteredTasks;
         }
+        return [];
     }
 
     function getTaskByPriority(priorities: Priority[], tasks: ITask[]){
@@ -60,10 +60,10 @@ export default function Painel(){
     return(
         <ContainerPainel>
             <Header changePriorityFilter={changePriorityFilter} changeStatusFilter={changeStatusFilter}/>
-            <FormTask onChangeTask={onChangeTask}/>
+            <FormTask />
             <PainelContent>
                 <ContainerTask>
-                    {tasks?.map(task => <Task priority={task.priority} text={task.task} done={task.done} id={task.id} key={task.id} onChangeTask={onChangeTask}></Task>)}
+                    {onChangeTask().map(task => <Task priority={task.priority} text={task.task} done={task.done} id={task.id} key={task.id}></Task>)}
                 </ContainerTask>
             </PainelContent>
         </ContainerPainel>

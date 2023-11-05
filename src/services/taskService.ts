@@ -1,78 +1,46 @@
 import { ITask } from "../Components/FormTask";
+import { Priority } from "../data/selectData";
 import { api } from "./apiService";
+import {AxiosPromise} from 'axios'
+
+export interface ICreateTask {
+    task: string,
+    priority: Priority
+}
+
+interface IUpdateTask {
+    task: string,
+    priority: Priority,
+    id: string
+}
 
 export function taskService(){
-
+    
     const services = {
 
-        createTask(task: ITask){
-            const tasksInString = localStorage.getItem('tasks');
-            if(!tasksInString){
-                const tasks: ITask[] = [task]
-                localStorage.setItem('tasks', JSON.stringify(tasks))
-            } else {
-                const newTasks: ITask[] = JSON.parse(tasksInString);
-                newTasks.push(task)
-                localStorage.setItem('tasks', JSON.stringify(newTasks));
-            }
+        async createTask(data: ICreateTask){
+            return await api.post('/tasks', data)
         },
 
-        findAllTasks(): ITask[]{
-            const tasksInString = localStorage.getItem('tasks');
-            if(tasksInString){
-                const tasks = JSON.parse(tasksInString);
-                return tasks;
-            }
-            return []
+        async findAllTasks(): AxiosPromise<ITask[]>{
+            return await api.get('/tasks')
         },
 
-        toggleDoneTask(id: string){
-            const tasksInString = localStorage.getItem('tasks');
-            if(tasksInString){
-                const tasks: ITask[] = JSON.parse(tasksInString);
-                const task = tasks.find(t => t.id === id);
-                if(task){
-                    task.done = !task.done
-                }
-                localStorage.setItem('tasks', JSON.stringify(tasks));
-            }
+        async doneTask(id: string){
+            return await api.put(`/tasks/done/${id}`)
         },
 
-        removeTask(id: string){
-            const tasksInString = localStorage.getItem('tasks');
-            if(tasksInString){
-                const tasks: ITask[] = JSON.parse(tasksInString);
-                if(tasks){
-                    const task = tasks.find(t=> t.id === id)
-                    if(task?.done){
-                        return
-                    }
-                    const filteredTasks: ITask[] = tasks.filter(t => t.id !== id);
-                    localStorage.setItem('tasks', JSON.stringify(filteredTasks));
-                }
-            }
+        async undoneTask(id: string){
+            return await api.put(`/tasks/undone/${id}`)
         },
 
-        updateTask(id: string, text: string): string | undefined{
-            const tasksInString = localStorage.getItem('tasks');
-            if(tasksInString){
-                const tasks: ITask[] = JSON.parse(tasksInString);
-                const task = tasks.find(t => t.id === id);
-                if(task && text){
-                    task.task = text
-                }
-                localStorage.setItem('tasks', JSON.stringify(tasks));
-                return task?.task
-            }
+        async removeTask(id: string){
+            return await api.delete(`/tasks/${id}`)
         },
 
-        signinUser(){
-
+        async updateTask(data: IUpdateTask) {
+            return await api.put(`/tasks/${data.id}`, {task: data.task, priority: data.priority})
         },
-
-        signupUSer(){
-
-        }
     }
 
     return services;

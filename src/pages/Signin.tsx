@@ -7,7 +7,7 @@ import {useNavigate} from 'react-router-dom'
 export default function Signin() {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
-    const {signIn, signed, isSuccess} = useContext(AuthContext)
+    const {signIn, signed} = useContext(AuthContext)
     const navigate = useNavigate()
 
     function loginSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -22,10 +22,10 @@ export default function Signin() {
     }
 
     useEffect(() => {
-        if(signed || isSuccess){
+        if(signed){
             navigate('/painel')
         }
-    }, [isSuccess, signed])
+    }, [signed])
 
     return (
         <ContainerLogin>

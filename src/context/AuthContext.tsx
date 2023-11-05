@@ -17,7 +17,7 @@ interface AuthContextProviderValue {
     user?: UserState,
     signed?: boolean,
     signIn?: (data: ISignInUser) => void
-    isSuccess?: boolean
+    logout?: () => void
 }
 
 export const AuthContext = createContext<AuthContextProviderValue>({})
@@ -25,10 +25,17 @@ export const AuthContext = createContext<AuthContextProviderValue>({})
 
 export function AuthProvider({children}: AuthProviderPtops){
     const [user, setUser] = useState<UserState>()
+    const [signed,setSigned] = useState(false)
     const { mutate, error,isError, data, isSuccess } = useSigninUser()
 
     function signIn(data: ISignInUser){
         mutate(data)
+    }
+
+    function logout(){
+        localStorage.removeItem('user')
+        localStorage.removeItem('token')
+        setSigned(false)
     }
 
 
@@ -37,8 +44,12 @@ export function AuthProvider({children}: AuthProviderPtops){
             const storageUser = localStorage.getItem('user')
             const storageToken = localStorage.getItem('token')
             if(storageToken && storageUser){
-                console.log(storageUser)
+                setSigned(true)
+                api.defaults.headers.common['Authorization'] = `Bearer ${storageToken}`
                 setUser(JSON.parse(storageUser))
+            } else {
+                setUser(undefined)
+                setSigned(false)
             }
         }
         loadStorageData()
@@ -51,6 +62,7 @@ export function AuthProvider({children}: AuthProviderPtops){
         }
         if(isSuccess){
             setUser(data.data)
+            setSigned(true)
             api.defaults.headers.common['Authorization'] = `Bearer ${data.data.token}`
         }
     }, [isError, isSuccess])
@@ -58,9 +70,9 @@ export function AuthProvider({children}: AuthProviderPtops){
     return(
         <AuthContext.Provider value={{
             user,
-            signed: !!user,
+            signed,
             signIn,
-            isSuccess
+            logout
         }}>
             {children}
         </AuthContext.Provider>

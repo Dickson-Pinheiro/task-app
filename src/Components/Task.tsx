@@ -1,31 +1,36 @@
 import styled from "styled-components"
 import { Priority } from '../data/selectData';
 import { PiXLight, PiCircleLight, PiCheckCircleFill, PiCheckLight, PiNotePencilThin } from 'react-icons/pi'
-import { taskService } from "../services/taskService"; 
+import { useDoneTask } from "../hooks/useDoneTask";
 import TaskDescription from "./TaskDescription";
 import { useState } from "react";
+import { useUndoneTask } from "../hooks/useUndoneTask";
+import { useRemoveTask } from "../hooks/useRemoveTask";
 
 interface TaskProps {
     text: string
     priority: Priority
     done: boolean
     id: string
-    onChangeTask: () => void
 }
 
 
-export default function Task({ text, priority, done, id, onChangeTask }: TaskProps) {
-    const { toggleDoneTask, removeTask: remove } = taskService()
+export default function Task({ text, priority, done, id }: TaskProps) {
     const [editable, setEditable] = useState<boolean>(false) 
+    const { mutate: doneTaskMutate } = useDoneTask()
+    const {mutate: undoneTaskMutate} = useUndoneTask()
+    const { mutate: removeTaskMutate } = useRemoveTask()
 
-    function doneTaskToggle() {
-        toggleDoneTask(id)
-        onChangeTask()
+    function doneTask() {
+        doneTaskMutate(id)
+    }
+
+    function undoneTask(){
+        undoneTaskMutate(id)
     }
 
     function removeTask(){
-        remove(id)
-        onChangeTask()
+        removeTaskMutate(id)
     }
 
     function onEditDisable(){
@@ -44,10 +49,10 @@ export default function Task({ text, priority, done, id, onChangeTask }: TaskPro
             }
             <Content>
                 <DoneControl>
-                    {done ? <PiCheckCircleFill color='#00ff00' onClick={doneTaskToggle}/> : <PiCircleLight onClick={doneTaskToggle}/>}
+                    {done ? <PiCheckCircleFill color='#00ff00' onClick={undoneTask}/> : <PiCircleLight onClick={doneTask}/>}
                 </DoneControl>
                 <ContainerDetails>
-                    <TaskDescription text={text} id={id} onChangeTask={onChangeTask} editable={editable} onEditDisable={onEditDisable}/>
+                    <TaskDescription text={text} id={id}  editable={editable} priority={priority} onEditDisable={onEditDisable}/>
                     <ContainerPriority priority={priority}>{priority}</ContainerPriority>
                 </ContainerDetails>
             </Content>

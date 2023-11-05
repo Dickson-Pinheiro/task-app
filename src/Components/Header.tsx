@@ -3,6 +3,8 @@ import {PiFunnelSimpleBold} from 'react-icons/pi'
 import { PriorityOption, Status } from "../data/selectData"
 import { useState } from "react";
 import Menu from "./Menu";
+import {useContext} from 'react'
+import { AuthContext } from "../context/AuthContext";
 
 interface HeaderProps {
     changePriorityFilter: (e: readonly PriorityOption[]) => void
@@ -11,12 +13,19 @@ interface HeaderProps {
 
 export default function Header({changePriorityFilter, changeStatusFilter}: HeaderProps) {
     const [showMenu, setShowMenu] = useState<boolean>(false);
+    const {logout} = useContext(AuthContext) as {logout: Function}
+
+    function handleLogout(){
+        logout()
+    }
+
     return (
         <>
         <ContainerHeader>
             <Content>
-                <h1>Painel de Tarefas</h1>
                 <PiFunnelSimpleBold size={28} onClick={() => setShowMenu(m => !m)}/>
+                <h1>Painel de Tarefas</h1>
+                <button onClick={handleLogout}>Sair</button>
             </Content>
         </ContainerHeader>
         <ContainerMenu className={showMenu ?'open':''}>
@@ -51,6 +60,17 @@ const Content = styled.div`
     box-sizing: border-box;
     svg {
         cursor: pointer;
+    }
+
+    button {
+        border: 3px solid ${props => props.theme['white']};
+        border-radius: 4px;
+        background: none;
+        color: ${props => props.theme['white']};
+        padding: 8px;
+        width: 110px;
+        box-sizing: border-box;
+
     }
 `
 

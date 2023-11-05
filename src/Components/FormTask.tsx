@@ -2,7 +2,8 @@ import styled from "styled-components";
 import { prioritiesOptions, Priority, PriorityOption } from '../data/selectData';
 import Select from 'react-select';
 import { useState } from "react";
-import { taskService } from "../services/taskService";
+import { ICreateTask } from "../services/taskService";
+import { useCreateTask } from "../hooks/useCreateTask";
 
 export interface ITask {
     task: string
@@ -12,41 +13,18 @@ export interface ITask {
     done: boolean
 }
 
-interface FormTaskProps {
-    onChangeTask: Function
-}
-
-export default function FormTask( { onChangeTask }: FormTaskProps ){
+export default function FormTask(){
     const [text, setText] = useState<string>('');
     const [defaultPriority, setDefaultPriority] = useState<PriorityOption>(prioritiesOptions[1])
-    const { createTask } = taskService()
-
-    function setPriorityValue(priority: Priority){
-        switch (priority) {
-            case 'urgente':
-                return 1
-            case 'alta':
-                return 2
-            case 'media':
-                return 3
-            case 'baixa':
-                return 4
-            default:
-                break;
-        }
-    }
+    const { mutate } = useCreateTask()
 
     function formSubmit(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault();
-        const task: ITask = {
+        const task: ICreateTask = {
             task: text,
             priority: defaultPriority.value,
-            id: crypto.randomUUID(),
-            priorityValue: setPriorityValue(defaultPriority.value) as number,
-            done: false
         } 
-        createTask(task)
-        onChangeTask()
+        mutate(task)
         setText('')
     }
 

@@ -1,32 +1,39 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { taskService } from "../services/taskService";
+import { Priority } from "../data/selectData";
+import { useUpdateTask } from "../hooks/useUpdateTask";
 
 interface TaskDescriptionProps {
     text: string
     id: string
     editable: boolean
-    onChangeTask: Function
+    priority: Priority,
     onEditDisable: () => void
 }
 
 
-export default function TaskDescription({ text, id, onChangeTask, editable, onEditDisable }: TaskDescriptionProps) {;
+export default function TaskDescription({ text, priority, id, editable, onEditDisable }: TaskDescriptionProps) {;
     const [editValue, setEditValue] = useState<string>(text);
-    const { updateTask } = taskService()
+    const { mutate } = useUpdateTask()
 
-    function editTaskValueSubmit(e: React.FormEvent<HTMLFormElement>){
+    async function editTaskValueSubmit(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault()
-        const newText = updateTask(id, editValue);
-        setEditValue(newText as string)
-        onChangeTask()
+        if(editValue === ''){
+            setEditValue(text)
+            onEditDisable()
+            return
+        }
+        mutate({task: editValue, priority, id});
         onEditDisable()
     }
 
-    function editTaskValueBlur(){
-        const newText = updateTask(id, editValue);
-        setEditValue(newText as string)
-        onChangeTask()
+    async function editTaskValueBlur(){
+        if(editValue === ''){
+            setEditValue(text)
+            onEditDisable()
+            return
+        }
+        mutate({task: editValue, priority, id});
         onEditDisable()
     }
 
