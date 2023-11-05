@@ -38,7 +38,7 @@ export default function FormTask(){
             <ContainerForm>
                 <input type='text' placeholder='Qual a sua task?' value={text} onChange={e => setText(e.target.value)} required/>
                 <CustomSelect options={prioritiesOptions} defaultValue={prioritiesOptions[1]} classNamePrefix={'select'} onChange={e => changePriority(e as PriorityOption)}/>
-                <button type='submit' disabled={isPending}>{true ? <Oval height={14} color="#000" secondaryColor="#fff" width={14}  /> :  'Criar'}</button>
+                <button type='submit' disabled={isPending}>{isPending ? <Oval height={14} color="#000" secondaryColor="#fff" width={14}  /> :  'Criar'}</button>
             </ContainerForm>
         </FormCreateTask>
     )
