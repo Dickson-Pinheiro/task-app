@@ -39,7 +39,7 @@ export default function Signin() {
                     <ContainerInput>
                         <input type="password" id="password" required value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Insira a sua senha' />
                     </ContainerInput>
-                    <button type='submit'>{isPending ? <Oval width={20} color='#ffffff' secondaryColor='rgb(250, 251, 252)'/> : "continuar"}</button>
+                    <button type='submit' disabled={isPending}>{isPending ? <Oval width={20} color='#ffffff' secondaryColor='rgb(250, 251, 252)'/> : "continuar"}</button>
                 </Form>
                 <ContainerSignupLink>
                     <p>Ainda não possui uma conta? <Link to="/signup">Cadastre-se aqui</Link></p>
