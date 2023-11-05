@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { prioritiesOptions, Priority, PriorityOption } from '../data/selectData';
 import Select from 'react-select';
 import { useState } from "react";
-import { apiService } from "../services/apiService";
+import { taskService } from "../services/taskService";
 
 export interface ITask {
     task: string
@@ -19,7 +19,7 @@ interface FormTaskProps {
 export default function FormTask( { onChangeTask }: FormTaskProps ){
     const [text, setText] = useState<string>('');
     const [defaultPriority, setDefaultPriority] = useState<PriorityOption>(prioritiesOptions[1])
-    const { createTask } = apiService()
+    const { createTask } = taskService()
 
     function setPriorityValue(priority: Priority){
         switch (priority) {

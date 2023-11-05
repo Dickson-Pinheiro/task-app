@@ -1,14 +1,25 @@
 import { ThemeProvider } from "styled-components"
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { GlobalStyles } from "./styles/GlobalStyles"
 import { defaultTheme } from "./styles/theme/defaultTheme"
-import Painel from "./pages/Painel"
+import Router from "./router"
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
-  return(
-    <ThemeProvider theme={defaultTheme}>
-      <GlobalStyles />
-      <Painel />
-    </ThemeProvider>
+  const queryClient = new QueryClient()
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <ThemeProvider theme={defaultTheme}>
+          <GlobalStyles />
+          <Router />
+          <ToastContainer />
+        </ThemeProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   )
 }
 

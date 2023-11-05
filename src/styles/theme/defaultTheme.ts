@@ -7,5 +7,11 @@ export const defaultTheme = {
     'background-create-task-button': 'linear-gradient(45deg, #e02523 10%, #661ca6 100%)',
     white: '#ffffff',
     done: '#FACFCE',
-    'background-menu': '#443736'
+    'background-menu': '#443736',
+    "login-bg": 'rgb(250, 251, 252)',
+    'color-link': '#0052cc',
+    'form-text-color': 'rgb(23, 43, 77)',
+    'input-login-bg': 'rgb(250, 251, 252)',
+    'login-button-bg': '#0052cc',
+    'login-button-hover': '#2066cf',
 }

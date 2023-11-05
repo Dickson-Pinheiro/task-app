@@ -2,12 +2,12 @@ import styled from "styled-components"
 import Header from "../Components/Header"
 import FormTask, { ITask } from "../Components/FormTask"
 import { useEffect, useState } from "react"
-import { apiService } from "../services/apiService"
+import { taskService } from "../services/taskService"
 import Task from "../Components/Task"
 import { Priority, PriorityOption, Status } from "../data/selectData"
 
 export default function Painel(){
-    const { findAllTasks } = apiService();
+    const { findAllTasks } = taskService();
     const [tasks, setTasks] = useState<ITask[]>([]);
     const [priorityFilter, setPriorityFilter] = useState<Priority[]>(['alta', 'baixa', 'media', 'urgente'])
     const [statusFilter, setStatusFilter] = useState<Status>('todos');

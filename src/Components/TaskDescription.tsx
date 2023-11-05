@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { apiService } from "../services/apiService";
-import {PiNotePencilThin} from 'react-icons/pi'
+import { taskService } from "../services/taskService";
 
 interface TaskDescriptionProps {
     text: string
@@ -14,7 +13,7 @@ interface TaskDescriptionProps {
 
 export default function TaskDescription({ text, id, onChangeTask, editable, onEditDisable }: TaskDescriptionProps) {;
     const [editValue, setEditValue] = useState<string>(text);
-    const { updateTask } = apiService()
+    const { updateTask } = taskService()
 
     function editTaskValueSubmit(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault()

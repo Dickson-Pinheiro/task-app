@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { Priority } from '../data/selectData';
 import { PiXLight, PiCircleLight, PiCheckCircleFill, PiCheckLight, PiNotePencilThin } from 'react-icons/pi'
-import { apiService } from "../services/apiService"; 
+import { taskService } from "../services/taskService"; 
 import TaskDescription from "./TaskDescription";
 import { useState } from "react";
 
@@ -15,7 +15,7 @@ interface TaskProps {
 
 
 export default function Task({ text, priority, done, id, onChangeTask }: TaskProps) {
-    const { toggleDoneTask, removeTask: remove } = apiService()
+    const { toggleDoneTask, removeTask: remove } = taskService()
     const [editable, setEditable] = useState<boolean>(false) 
 
     function doneTaskToggle() {
