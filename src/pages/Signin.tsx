@@ -1,8 +1,7 @@
 import { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import {useNavigate} from 'react-router-dom'
 
 export default function Signin() {
     const [email, setEmail] = useState<string>('')

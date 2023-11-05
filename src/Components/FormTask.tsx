@@ -68,10 +68,10 @@ const ContainerForm = styled.div`
         padding-right: 5px;
         box-sizing: border-box;
         font-family: 'Montserrat', sans-serif;
-        border: 3px solid #661ca6;
+        border: 1px solid #661ca6;
     }
     button {
-        height: 50px;
+        height: 38px;
         border: none;
         background: ${props => props.theme['background-create-task-button']};
         color: ${props => props.theme.white};
@@ -91,6 +91,7 @@ const ContainerForm = styled.div`
 const CustomSelect = styled(Select)`
     font-family: 'Montserrat', sans-serif;
     font-size: 12px;
+    min-width: 120px;
     .select__control, .select__value-container {
         height: 30px;
     }

@@ -1,17 +1,17 @@
 import styled from "styled-components";
 import Select from 'react-select';
-import { Status, statusOptions, prioritiesOptions, PriorityOption } from "../data/selectData";
+import { statusOptions, prioritiesOptions, PriorityOption, StatusOption } from "../data/selectData";
 
 interface MenuProps {
     changePriorityFilter: (e: readonly PriorityOption[]) => void;
-    changeStatusFilter: (e: Status) => void
+    changeStatusFilter: (e: StatusOption) => void
 }
 
 export default function Menu({ changePriorityFilter, changeStatusFilter }: MenuProps){
     return(
         <ContainerMenu>
             <Content>
-                <Select options={statusOptions} defaultValue={statusOptions[2]} onChange={e => changeStatusFilter(e?.value as Status)}/>
+                <CustomSelect options={statusOptions} defaultValue={statusOptions[2]} onChange={(e) => changeStatusFilter(e as StatusOption)}/>
                 <Select options={prioritiesOptions} isMulti defaultValue={[...prioritiesOptions]} onChange={changePriorityFilter}/>
             </Content>
         </ContainerMenu>
@@ -41,4 +41,8 @@ const Content = styled.div`
     @media(max-width: 500px){
         flex-direction: column;
     }
+`
+
+const CustomSelect = styled(Select)`
+    min-width: 200px;
 `

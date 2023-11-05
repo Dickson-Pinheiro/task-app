@@ -2,9 +2,8 @@ import styled from "styled-components"
 import Header from "../Components/Header"
 import FormTask, { ITask } from "../Components/FormTask"
 import { useEffect, useState } from "react"
-import { taskService } from "../services/taskService"
 import Task from "../Components/Task"
-import { Priority, PriorityOption, Status } from "../data/selectData"
+import { Priority, PriorityOption, Status, StatusOption } from "../data/selectData"
 import { useListTasks } from "../hooks/useListTasks"
 
 export default function Painel(){
@@ -52,8 +51,8 @@ export default function Painel(){
         setPriorityFilter(e.map(i => i.value));
     }
 
-    function changeStatusFilter(status: Status){
-        setStatusFilter(status);
+    function changeStatusFilter(e: StatusOption){
+        setStatusFilter(e.value);
     }
     
 

@@ -1,14 +1,13 @@
 import styled from "styled-components"
 import {PiFunnelSimpleBold} from 'react-icons/pi'
-import { PriorityOption, Status } from "../data/selectData"
-import { useState } from "react";
+import { PriorityOption, StatusOption } from "../data/selectData"
+import { useState, useContext } from "react";
 import Menu from "./Menu";
-import {useContext} from 'react'
 import { AuthContext } from "../context/AuthContext";
 
 interface HeaderProps {
     changePriorityFilter: (e: readonly PriorityOption[]) => void
-    changeStatusFilter: (e: Status) => void
+    changeStatusFilter: (e: StatusOption) => void
 }
 
 export default function Header({changePriorityFilter, changeStatusFilter}: HeaderProps) {
@@ -62,15 +61,21 @@ const Content = styled.div`
         cursor: pointer;
     }
 
+    h1 {
+        font-size: 20px;
+    }
+
     button {
         border: 3px solid ${props => props.theme['white']};
-        border-radius: 4px;
+        border-radius: 8px;
+        font-weight: bold;
         background: none;
         color: ${props => props.theme['white']};
         padding: 8px;
         width: 110px;
         box-sizing: border-box;
-
+        font-family: 'Montserrat', sans-serif;
+        cursor: pointer;
     }
 `
 
