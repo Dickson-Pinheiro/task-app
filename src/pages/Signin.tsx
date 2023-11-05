@@ -2,11 +2,12 @@ import { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { Oval } from 'react-loader-spinner';
 
 export default function Signin() {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
-    const {signIn, signed} = useContext(AuthContext)
+    const {signIn, signed, isPending} = useContext(AuthContext)
     const navigate = useNavigate()
 
     function loginSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -38,7 +39,7 @@ export default function Signin() {
                     <ContainerInput>
                         <input type="password" id="password" required value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Insira a sua senha' />
                     </ContainerInput>
-                    <button type='submit'>Continuar</button>
+                    <button type='submit'>{isPending ? <Oval width={20} color='#ffffff' secondaryColor='rgb(250, 251, 252)'/> : "continuar"}</button>
                 </Form>
                 <ContainerSignupLink>
                     <p>Ainda não possui uma conta? <Link to="/signup">Cadastre-se aqui</Link></p>
@@ -94,7 +95,7 @@ const ContainerInput = styled.div`
     flex-direction: column;
     gap: 5px;
     width: 100%;
-    padding: 4px;
+    box-sizing: border-box;
 `
 
 const Form = styled.form`
@@ -102,6 +103,7 @@ const Form = styled.form`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    box-sizing: border-box;
     padding-top: 20px;
     width: 100%;
     gap: 5px;
@@ -120,6 +122,7 @@ const Form = styled.form`
         border-radius: 4px;
         border: 1px solid rgba(0, 0, 0, 0.1);
         padding-left: 10px;
+        box-sizing: border-box;
         font-family: 'Montserrat', sans-serif;
         background-color: ${props => props.theme['input-login-bg']};
         font-weight: 200;
@@ -136,6 +139,9 @@ const Form = styled.form`
         border-radius: 4px;
         cursor: pointer;
         transition: 200ms;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         &:hover {
             background-color: ${props => props.theme['login-button-hover']};
         }

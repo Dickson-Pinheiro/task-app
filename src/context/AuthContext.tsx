@@ -16,6 +16,7 @@ interface UserState {
 interface AuthContextProviderValue {
     user?: UserState,
     signed?: boolean,
+    isPending?: boolean,
     signIn?: (data: ISignInUser) => void
     logout?: () => void
 }
@@ -26,7 +27,7 @@ export const AuthContext = createContext<AuthContextProviderValue>({})
 export function AuthProvider({children}: AuthProviderPtops){
     const [user, setUser] = useState<UserState>()
     const [signed,setSigned] = useState(false)
-    const { mutate, error,isError, data, isSuccess } = useSigninUser()
+    const { mutate, error,isError, data, isSuccess, isPending } = useSigninUser()
 
     function signIn(data: ISignInUser){
         mutate(data)
@@ -72,7 +73,8 @@ export function AuthProvider({children}: AuthProviderPtops){
             user,
             signed,
             signIn,
-            logout
+            logout,
+            isPending
         }}>
             {children}
         </AuthContext.Provider>

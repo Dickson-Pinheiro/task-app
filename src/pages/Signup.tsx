@@ -55,7 +55,7 @@ export default function Signin() {
                     <ContainerInput>
                         <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Insira a sua senha' />
                     </ContainerInput>
-                    <button type='submit' disabled={isPending}>{isPending ? <Oval width={20} color='#ffffff' secondaryColor='rgb(250, 251, 252)'/> : "continuar"}r</button>
+                    <button type='submit' disabled={isPending}>{isPending ? <Oval width={20} color='#ffffff' secondaryColor='rgb(250, 251, 252)'/> : "continuar"}</button>
                 </Form>
                 <ContainerSignupLink>
                     <p>Já possui um cadastro? <Link to="/">faça login aqui.</Link></p>
@@ -140,6 +140,7 @@ const Form = styled.form`
         font-family: 'Montserrat', sans-serif;
         background-color: ${props => props.theme['input-login-bg']};
         font-weight: 200;
+        box-sizing: border-box;
     }
 
     button {
