@@ -80,6 +80,7 @@ const ContainerSignup = styled.div`
 const ContainerSignupLink = styled.div`
     margin-top: 20px;
     p {
+        text-align: center;
         font-family: 'Montserrat', sans-serif;
         font-size: 14px;
         a {
