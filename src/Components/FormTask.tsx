@@ -4,6 +4,7 @@ import Select from 'react-select';
 import { useState } from "react";
 import { ICreateTask } from "../services/taskService";
 import { useCreateTask } from "../hooks/useCreateTask";
+import { Oval } from "react-loader-spinner";
 
 export interface ITask {
     task: string
@@ -16,7 +17,7 @@ export interface ITask {
 export default function FormTask(){
     const [text, setText] = useState<string>('');
     const [defaultPriority, setDefaultPriority] = useState<PriorityOption>(prioritiesOptions[1])
-    const { mutate } = useCreateTask()
+    const { mutate, isPending } = useCreateTask()
 
     function formSubmit(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault();
@@ -37,7 +38,7 @@ export default function FormTask(){
             <ContainerForm>
                 <input type='text' placeholder='Qual a sua task?' value={text} onChange={e => setText(e.target.value)} required/>
                 <CustomSelect options={prioritiesOptions} defaultValue={prioritiesOptions[1]} classNamePrefix={'select'} onChange={e => changePriority(e as PriorityOption)}/>
-                <button type='submit'>Criar</button>
+                <button type='submit' disabled={isPending}>{true ? <Oval height={14} color="#000" secondaryColor="#fff" width={14}  /> :  'Criar'}</button>
             </ContainerForm>
         </FormCreateTask>
     )
@@ -80,6 +81,9 @@ const ContainerForm = styled.div`
         border-radius: 8px;
         width: 90px;
         cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     @media(max-width: 480px){
