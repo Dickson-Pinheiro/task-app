@@ -52,7 +52,7 @@ A autenticação foi implementada com login e senha. As requisições são autor
 
 Os testes foram desenvolvidos utilizando [vitest](https://vitest.dev/) e [react-testing-library](https://testing-library.com/docs/react-testing-library/intro/).
 
-Todos os componentes possuem ao menos teste de renderização. Componentes de
+Todos os componentes possuem ao menos teste de renderização.
 
 Esses são todos os cenários de testes abordados:
 
