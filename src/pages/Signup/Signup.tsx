@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import {AxiosError} from 'axios'
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSignupUser } from '../hooks/useSignupUser';
-import { IUserSignup } from '../services/authService';
+import { useSignupUser } from '../../hooks/useSignupUser';
+import { IUserSignup } from '../../services/authService';
 import { toast } from 'react-toastify';
 import { Oval } from 'react-loader-spinner';
 

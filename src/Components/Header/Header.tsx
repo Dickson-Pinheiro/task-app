@@ -1,9 +1,11 @@
 import styled from "styled-components"
 import {PiFunnelSimpleBold} from 'react-icons/pi'
-import { PriorityOption, StatusOption } from "../data/selectData"
+import { PriorityOption, StatusOption } from "../../data/selectData"
 import { useState, useContext } from "react";
-import Menu from "./Menu";
-import { AuthContext } from "../context/AuthContext";
+import Menu from "../Menu/Menu";
+import { AuthContext } from "../../context/AuthContext";
+import LogoutButton from "./LogoutButton/LogoutButton";
+import ToggleMenuButton from "./ToggleMenuButton/ToggleMenuButton";
 
 interface HeaderProps {
     changePriorityFilter: (e: readonly PriorityOption[]) => void
@@ -18,13 +20,17 @@ export default function Header({changePriorityFilter, changeStatusFilter}: Heade
         logout()
     }
 
+    function toggleMenu(){
+        setShowMenu(m => !m)
+    }
+
     return (
         <>
         <ContainerHeader>
             <Content>
-                <PiFunnelSimpleBold size={28} onClick={() => setShowMenu(m => !m)}/>
+                <ToggleMenuButton toggleMenu={toggleMenu}/>
                 <h1>Painel de Tarefas</h1>
-                <button onClick={handleLogout}>Sair</button>
+                <LogoutButton handleLogout={handleLogout}/>
             </Content>
         </ContainerHeader>
         <ContainerMenu className={showMenu ?'open':''}>
@@ -63,19 +69,6 @@ const Content = styled.div`
 
     h1 {
         font-size: 20px;
-    }
-
-    button {
-        border: 3px solid ${props => props.theme['white']};
-        border-radius: 8px;
-        font-weight: bold;
-        background: none;
-        color: ${props => props.theme['white']};
-        padding: 8px;
-        width: 110px;
-        box-sizing: border-box;
-        font-family: 'Montserrat', sans-serif;
-        cursor: pointer;
     }
 `
 

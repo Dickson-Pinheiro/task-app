@@ -1,10 +1,10 @@
 import styled from "styled-components"
-import Header from "../Components/Header"
-import FormTask, { ITask } from "../Components/FormTask"
+import Header from "../../Components/Header/Header"
+import FormTask, { ITask } from "../../Components/FormTask/FormTask"
 import { useEffect, useState } from "react"
-import Task from "../Components/Task"
-import { Priority, PriorityOption, Status, StatusOption } from "../data/selectData"
-import { useListTasks } from "../hooks/useListTasks"
+import Task from "../../Components/Task/Task"
+import { Priority, PriorityOption, Status, StatusOption } from "../../data/selectData"
+import { useListTasks } from "../../hooks/useListTasks"
 
 export default function Painel(){
     const [priorityFilter, setPriorityFilter] = useState<Priority[]>(['alta', 'baixa', 'media', 'urgente'])

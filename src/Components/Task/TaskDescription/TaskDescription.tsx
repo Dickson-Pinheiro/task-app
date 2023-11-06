@@ -1,7 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { Priority } from "../data/selectData";
-import { useUpdateTask } from "../hooks/useUpdateTask";
+import { Priority } from "../../../data/selectData";
+import { useUpdateTask } from "../../../hooks/useUpdateTask";
+import TaskDescriptionForm from "./TaskDescriptionForm/TaskDescriptionForm";
 
 interface TaskDescriptionProps {
     text: string
@@ -12,38 +13,46 @@ interface TaskDescriptionProps {
 }
 
 
-export default function TaskDescription({ text, priority, id, editable, onEditDisable }: TaskDescriptionProps) {;
+export default function TaskDescription({ text, priority, id, editable, onEditDisable }: TaskDescriptionProps) {
+    ;
     const [editValue, setEditValue] = useState<string>(text);
     const { mutate } = useUpdateTask()
 
-    async function editTaskValueSubmit(e: React.FormEvent<HTMLFormElement>){
+    async function editTaskValueSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
-        if(editValue === ''){
+        if (editValue === '') {
             setEditValue(text)
             onEditDisable()
             return
         }
-        mutate({task: editValue, priority, id});
+        mutate({ task: editValue, priority, id });
         onEditDisable()
     }
 
-    async function editTaskValueBlur(){
-        if(editValue === ''){
+    function editTaskValueBlur() {
+        if (editValue === '') {
             setEditValue(text)
             onEditDisable()
             return
         }
-        mutate({task: editValue, priority, id});
+        mutate({ task: editValue, priority, id });
         onEditDisable()
+    }
+
+    function editValueState(value: string) {
+        setEditValue(value)
     }
 
     return (
         <ContainerTaskDescription>
-            {!editable && <ContainerText>{editValue}</ContainerText>}
+            {!editable && <ContainerText data-testid="text-description">{editValue}</ContainerText>}
             {editable && (
-                <EditForm onSubmit={editTaskValueSubmit}>
-                    <input type='text' value={editValue} onChange={(e) => setEditValue(e.target.value)} autoFocus onBlur={editTaskValueBlur} />
-                </EditForm>
+                <TaskDescriptionForm
+                    editTaskValueBlur={editTaskValueBlur}
+                    editTaskValueSubmit={editTaskValueSubmit}
+                    editValue={editValue}
+                    editValueState={editValueState}
+                />
             )
             }
         </ContainerTaskDescription>

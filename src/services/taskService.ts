@@ -1,4 +1,4 @@
-import { ITask } from "../Components/FormTask";
+import { ITask } from "../Components/FormTask/FormTask";
 import { Priority } from "../data/selectData";
 import { api } from "./apiService";
 import {AxiosPromise} from 'axios'

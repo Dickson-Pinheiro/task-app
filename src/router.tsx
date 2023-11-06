@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Painel from "./pages/Painel";
-import Signin from "./pages/Signin";
-import Signup from "./pages/Signup";
+import Painel from "./pages/Painel/Painel";
+import Signin from "./pages/Signin/Signin";
+import Signup from "./pages/Signup/Signup";
 import PrivateRoute from "./layouts/PrivateRoute";
 
 export default function Router() {

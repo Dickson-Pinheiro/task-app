@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Select from 'react-select';
-import { statusOptions, prioritiesOptions, PriorityOption, StatusOption } from "../data/selectData";
+import { statusOptions, prioritiesOptions, PriorityOption, StatusOption } from "../../data/selectData";
 
 interface MenuProps {
     changePriorityFilter: (e: readonly PriorityOption[]) => void;

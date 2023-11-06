@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { prioritiesOptions, Priority, PriorityOption } from '../data/selectData';
+import { prioritiesOptions, Priority, PriorityOption } from '../../data/selectData';
 import Select from 'react-select';
 import { useState } from "react";
-import { ICreateTask } from "../services/taskService";
-import { useCreateTask } from "../hooks/useCreateTask";
+import { ICreateTask } from "../../services/taskService";
+import { useCreateTask } from "../../hooks/useCreateTask";
 import { Oval } from "react-loader-spinner";
 
 export interface ITask {

@@ -1,12 +1,14 @@
 import styled from "styled-components"
-import { Priority } from '../data/selectData';
+import { Priority } from '../../data/selectData';
 import { PiXLight, PiCircleLight, PiCheckCircleFill, PiCheckLight, PiNotePencilThin } from 'react-icons/pi'
-import { useDoneTask } from "../hooks/useDoneTask";
-import TaskDescription from "./TaskDescription";
+import { useDoneTask } from "../../hooks/useDoneTask";
+import TaskDescription from "./TaskDescription/TaskDescription";
 import { useState } from "react";
-import { useUndoneTask } from "../hooks/useUndoneTask";
-import { useRemoveTask } from "../hooks/useRemoveTask";
+import { useUndoneTask } from "../../hooks/useUndoneTask";
+import { useRemoveTask } from "../../hooks/useRemoveTask";
 import { Oval } from "react-loader-spinner";
+import TaskEditButton from "./TaskEditButton/TaskEditButton";
+import RemoveTaskButton from "./RemoveTaskButton/RemoveTaskButton";
 
 interface TaskProps {
     text: string
@@ -38,13 +40,17 @@ export default function Task({ text, priority, done, id }: TaskProps) {
         setEditable(false)
     }
 
+    function changeEditableTask(){
+        setEditable(true)
+    }
+
     return (
         <ContainerTask done={done}>
             {   
                 !done && (
                 <EditAndDeleteControl >
-                    {!editable && <PiNotePencilThin onClick={() => setEditable(true)} />}
-                    {isPendingRemove ? <Oval height={12} color="#000" secondaryColor="#fff" width={12}  /> : <PiXLight onClick={removeTask}/>}
+                    <TaskEditButton editable={editable} changeEditableTask={changeEditableTask}/>
+                    <RemoveTaskButton isPendingRemove={isPendingDone} removeTask={removeTask}/>
                 </EditAndDeleteControl>
                 )
             }
