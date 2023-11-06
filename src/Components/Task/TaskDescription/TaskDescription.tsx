@@ -76,13 +76,3 @@ const ContainerText = styled.p`
     width: 100%;
     word-wrap: break-word;
 `
-const EditForm = styled.form`
-    width: 100%;
-    input {
-        width: 100%;
-        height: 40px;
-        border-radius: 4px;
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-`

@@ -1,12 +1,12 @@
 import { PiXLight } from "react-icons/pi";
 import { Oval } from "react-loader-spinner";
 
-interface removeTaskButtonProps {
+interface RemoveTaskButtonProps {
     isPendingRemove: boolean
     removeTask: () => void
 }
 
-export default function RemoveTaskButton({isPendingRemove, removeTask}: removeTaskButtonProps){
+export default function RemoveTaskButton({isPendingRemove, removeTask}: RemoveTaskButtonProps){
     return(
         <>
             {

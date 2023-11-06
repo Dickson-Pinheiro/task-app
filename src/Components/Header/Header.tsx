@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import {PiFunnelSimpleBold} from 'react-icons/pi'
 import { PriorityOption, StatusOption } from "../../data/selectData"
 import { useState, useContext } from "react";
 import Menu from "../Menu/Menu";

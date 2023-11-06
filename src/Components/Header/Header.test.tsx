@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom"
 import { render } from "@testing-library/react"
-import {describe, expect, test, vi} from 'vitest'
+import {describe, expect, test} from 'vitest'
 import Header from "./Header"
 import { AuthProvider } from "../../context/AuthContext"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"

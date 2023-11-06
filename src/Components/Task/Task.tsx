@@ -1,14 +1,14 @@
 import styled from "styled-components"
 import { Priority } from '../../data/selectData';
-import { PiXLight, PiCircleLight, PiCheckCircleFill, PiCheckLight, PiNotePencilThin } from 'react-icons/pi'
+import { PiCheckLight } from 'react-icons/pi'
 import { useDoneTask } from "../../hooks/useDoneTask";
 import TaskDescription from "./TaskDescription/TaskDescription";
 import { useState } from "react";
 import { useUndoneTask } from "../../hooks/useUndoneTask";
 import { useRemoveTask } from "../../hooks/useRemoveTask";
-import { Oval } from "react-loader-spinner";
 import TaskEditButton from "./TaskEditButton/TaskEditButton";
 import RemoveTaskButton from "./RemoveTaskButton/RemoveTaskButton";
+import ToggleDoneButton from "./ToggleDoneButton/ToggleDoneButton";
 
 interface TaskProps {
     text: string
@@ -50,13 +50,13 @@ export default function Task({ text, priority, done, id }: TaskProps) {
                 !done && (
                 <EditAndDeleteControl >
                     <TaskEditButton editable={editable} changeEditableTask={changeEditableTask}/>
-                    <RemoveTaskButton isPendingRemove={isPendingDone} removeTask={removeTask}/>
+                    <RemoveTaskButton isPendingRemove={isPendingRemove} removeTask={removeTask}/>
                 </EditAndDeleteControl>
                 )
             }
             <Content>
                 <DoneControl>
-                    {done ? <PiCheckCircleFill color='#00ff00' onClick={undoneTask}/> : (isPendingDone ? <Oval height={12} color="#000" secondaryColor="#fff" width={12}  /> :  <PiCircleLight onClick={doneTask}/>)}
+                    <ToggleDoneButton done={done} doneTask={doneTask} isPendingDone={isPendingDone} undoneTask={undoneTask}/>
                 </DoneControl>
                 <ContainerDetails>
                     <TaskDescription text={text} id={id}  editable={editable} priority={priority} onEditDisable={onEditDisable}/>
