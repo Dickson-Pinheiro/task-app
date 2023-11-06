@@ -5,11 +5,14 @@ import { useEffect, useState } from "react"
 import Task from "../../Components/Task/Task"
 import { Priority, PriorityOption, Status, StatusOption } from "../../data/selectData"
 import { useListTasks } from "../../hooks/useListTasks"
+import { useCreateTask } from "../../hooks/useCreateTask"
+import { ICreateTask } from "../../services/taskService"
 
-export default function Painel(){
+export default function Panel(){
     const [priorityFilter, setPriorityFilter] = useState<Priority[]>(['alta', 'baixa', 'media', 'urgente'])
     const [statusFilter, setStatusFilter] = useState<Status>('todos');
     const { data, refetch } = useListTasks()
+    const { mutate, isPending } = useCreateTask()
 
     useEffect(() => {
         refetch()
@@ -55,11 +58,14 @@ export default function Painel(){
         setStatusFilter(e.value);
     }
     
+    function onSubmitForm(data: ICreateTask){
+        mutate(data)
+    }
 
     return(
         <ContainerPainel>
             <Header changePriorityFilter={changePriorityFilter} changeStatusFilter={changeStatusFilter}/>
-            <FormTask />
+            <FormTask onSubmitForm={onSubmitForm} isPending={isPending}/>
             <PainelContent>
                 <ContainerTask>
                     {onChangeTask().map(task => <Task priority={task.priority} text={task.task} done={task.done} id={task.id} key={task.id}></Task>)}

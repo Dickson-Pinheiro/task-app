@@ -45,15 +45,18 @@ export default function TaskDescription({ text, priority, id, editable, onEditDi
 
     return (
         <ContainerTaskDescription>
-            {!editable && <ContainerText data-testid="text-description">{editValue}</ContainerText>}
-            {editable && (
+            {
+                editable 
+                ? 
                 <TaskDescriptionForm
                     editTaskValueBlur={editTaskValueBlur}
                     editTaskValueSubmit={editTaskValueSubmit}
                     editValue={editValue}
                     editValueState={editValueState}
                 />
-            )
+                :
+                <ContainerText data-testid="text-description">{editValue}</ContainerText>
+                
             }
         </ContainerTaskDescription>
     )

@@ -7,8 +7,7 @@ export default function PrivateRoute(){
 
     return(
         <>
-        {signed && <Outlet />}
-        {!signed && <Navigate to="/" />}
+        {signed ? <Outlet /> : <Navigate to="/"/>}
         </>
     )
 }

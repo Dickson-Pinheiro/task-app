@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import {AxiosError} from 'axios'
+import { AxiosError } from 'axios'
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSignupUser } from '../../hooks/useSignupUser';
@@ -25,14 +25,13 @@ export default function Signin() {
     }
 
     useEffect(() => {
-        if(isError){
+        if (isError) {
             setEmail('')
             setName('')
             setPassword('')
-            const axiosError = error as AxiosError<{message: string}>
+            const axiosError = error as AxiosError<{ message: string }>
             toast(axiosError?.response?.data?.message)
-        }
-        if(isSuccess){
+        } else if (isSuccess) {
             setEmail('')
             setName('')
             setPassword('')
@@ -55,7 +54,7 @@ export default function Signin() {
                     <ContainerInput>
                         <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Insira a sua senha' />
                     </ContainerInput>
-                    <button type='submit' disabled={isPending}>{isPending ? <Oval width={20} color='#ffffff' secondaryColor='rgb(250, 251, 252)'/> : "continuar"}</button>
+                    <button type='submit' disabled={isPending}>{isPending ? <Oval width={20} color='#ffffff' secondaryColor='rgb(250, 251, 252)' /> : "continuar"}</button>
                 </Form>
                 <ContainerSignupLink>
                     <p>Já possui um cadastro? <Link to="/">faça login aqui.</Link></p>
@@ -73,7 +72,6 @@ const ContainerSignup = styled.div`
     justify-content: center;
     flex-direction: column;
     gap: 30px;
-    margin-bottom: 200px;
     background-color:${props => props.theme['login-bg']};
 `
 
@@ -104,6 +102,9 @@ const Container = styled.div`
         cursor: pointer;
         text-align: center;
         padding: 10px;
+    }
+    @media (min-height: 800px){
+        min-height: 700px;
     }
 `
 

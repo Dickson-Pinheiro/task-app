@@ -3,7 +3,6 @@ import { prioritiesOptions, Priority, PriorityOption } from '../../data/selectDa
 import Select from 'react-select';
 import { useState } from "react";
 import { ICreateTask } from "../../services/taskService";
-import { useCreateTask } from "../../hooks/useCreateTask";
 import { Oval } from "react-loader-spinner";
 
 export interface ITask {
@@ -14,10 +13,14 @@ export interface ITask {
     done: boolean
 }
 
-export default function FormTask(){
+interface IFormTaskProps {
+    onSubmitForm: (data: ICreateTask) => void,
+    isPending: boolean
+}
+
+export default function FormTask({ onSubmitForm, isPending } : IFormTaskProps){
     const [text, setText] = useState<string>('');
     const [defaultPriority, setDefaultPriority] = useState<PriorityOption>(prioritiesOptions[1])
-    const { mutate, isPending } = useCreateTask()
 
     function formSubmit(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault();
@@ -25,7 +28,7 @@ export default function FormTask(){
             task: text,
             priority: defaultPriority.value,
         } 
-        mutate(task)
+        onSubmitForm(task)
         setText('')
     }
 
@@ -34,11 +37,11 @@ export default function FormTask(){
     }
 
     return(
-        <FormCreateTask onSubmit={formSubmit}>
+        <FormCreateTask onSubmit={formSubmit} data-testid="form-create-task">
             <ContainerForm>
-                <input type='text' placeholder='Qual a sua task?' value={text} onChange={e => setText(e.target.value)} required/>
+                <input type='text' placeholder='Qual a sua task?' value={text} onChange={e => setText(e.target.value)} required data-testid="input-create-task" disabled={isPending}/>
                 <CustomSelect options={prioritiesOptions} defaultValue={prioritiesOptions[1]} classNamePrefix={'select'} onChange={e => changePriority(e as PriorityOption)}/>
-                <button type='submit' disabled={isPending}>{isPending ? <Oval height={14} color="#000" secondaryColor="#fff" width={14}  /> :  'Criar'}</button>
+                <button type='submit' disabled={isPending} data-testid="button-create-task">{isPending ? <Oval height={14} color="#000" secondaryColor="#fff" width={14}  /> :  'Criar'}</button>
             </ContainerForm>
         </FormCreateTask>
     )

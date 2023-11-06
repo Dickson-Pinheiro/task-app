@@ -23,7 +23,7 @@ export default function Signin() {
 
     useEffect(() => {
         if(signed){
-            navigate('/painel')
+            navigate('/panel')
         }
     }, [signed])
 
@@ -57,7 +57,6 @@ const ContainerLogin = styled.div`
     justify-content: center;
     flex-direction: column;
     gap: 30px;
-    margin-bottom: 200px;
     background-color:${props => props.theme['login-bg']};
 `
 
@@ -88,6 +87,9 @@ const Container = styled.div`
         cursor: pointer;
         text-align: center;
         padding: 10px;
+    }
+    @media (min-height: 800px){
+        min-height: 700px;
     }
 `
 
