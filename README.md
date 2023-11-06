@@ -30,3 +30,81 @@ Todos os Bônus serão executados
 
 
 ## Instruções para executar - ambiente dev
+
+O projeto foi feito utilizando Vite e Typescript. Por esse motivo, é necessário que o Node esteja instalado em sua máquina para executá-lo.
+
+Para executar o projeto em ambiente de desenvolvimento, é necessário seguir as seguintes etapas:
+ - Clonar o repositório em sua máquina;
+ - executar o comando npm install;
+ - Criar um arquivo .env na raiz do projeto;
+    - No .env, inserir a variável de ambiente VITE_API_URL=https://api.dicksonpinheiro.com.br (essa é uma api externa criada por mim para esse teste. O código está nesse repositório [aqui](https://github.com/Dickson-Pinheiro/task-app-back)).   
+ - Executar o comando npm run dev
+
+ ## Deploy, api externa e autenticação;
+
+ O front-end da aplicação está disponível [aqui](https://task-app-kappa.vercel.app/) e o deploy foi feito na plataforma da [vercel](https://vercel.com/).
+ 
+ O backend está disponível através da url https://api.dicksonpinheiro.com.br e o deploy foi realizado em um servidor vps, utilizando docker e docker compose. Os dados estão persistidos no banco de dados postgres. Caso deseje consultar o código também do back-end, você pode acessá-lo [aqui](https://github.com/Dickson-Pinheiro/task-app-back).
+
+A autenticação foi implementada com login e senha. As requisições são autorizadas através de um token JWT na requisição.
+
+## Cenários de teste.
+
+Os testes foram desenvolvidos utilizando [vitest](https://vitest.dev/) e [react-testing-library](https://testing-library.com/docs/react-testing-library/intro/).
+
+Todos os componentes possuem ao menos teste de renderização. Componentes de
+
+Esses são todos os cenários de testes abordados:
+
+    - Página de Signin
+        - Deve renderizar corretamente
+    - Página de Signup
+        - Deve renderizar corretamente
+    - Página do Panel
+        - Deve renderizar corretamente
+    - Componente Header
+        - Deve renderizar corretamente
+    - Componente LogoutButton
+        - Deve renderizar corretamente
+        - Deve ser possível clicar
+    - Componente ToggleMenuButton
+        - Deve renderizar corretamente
+        - Deve ser possível clicar
+    - Componente Menu
+        - Deve renderizar corretamente
+    - Componente FormTask
+        - Deve renderizar corretamente
+        - Deve ser possível emitir evento de submit quando o input estiver preenchido
+        - Deve ser possível submeter o form através do botão
+        - O botão deve estar desabilitado quando a requisição estiver pendente
+        - "O input deve estar desabilitado quando a requisição estiver pendente
+    - Componente Task
+        - Deve renderizar corretamente
+    - Componente RemoveTask
+        - Deve renderizar corretamente
+        - Deve ser possível clicar quando não estiver pendente
+        - Botão não deve ser renderizado quando estiver pendente
+        - Loading deve ser realizado quando estiver pendente
+        - loading não deve ser renderizado quando não estiver pendente
+    - Componente TaskDescription
+        - Deve renderizar corretamente
+        - Deve renderizar o formulário quando estiver editável
+    - Componente TaskDescriptionForm
+        - Deve renderizar corretamente
+        - Deve emitir evento quando for submetido
+        - Deve emitir evento ao perder o foco no input
+    - Componente TaskEditButton
+        - Deve renderizar corretamente
+        - Deve ser possível clicar quando o editable for false
+        - Deve retornar um elemento dom vazio  quando editable for true
+    - Componente ToggleDoneButton
+        - Deve renderizar corretamente
+        - Deve ser clicável quando não estiver concluído ou carregando
+        - deve renderizar o checked quando estiver concluído
+        - deve ser clicável quando estiver concluído
+        - Deve renderizar o loading quando não estiver concluído e pendente
+    
+
+
+
+
